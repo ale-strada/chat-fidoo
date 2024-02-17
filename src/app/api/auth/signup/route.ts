@@ -1,13 +1,8 @@
-import { auth } from "@/lib/firebase";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { signUp } from "../../controllers/auth";
 
 export async function POST(request: Request) {
 	const body = await request.json();
-	const user = await createUserWithEmailAndPassword(
-		auth,
-		body.email,
-		body.password
-	);
+	const user = await signUp(body.email, body.password);
 
 	return Response.json({ user });
 }
