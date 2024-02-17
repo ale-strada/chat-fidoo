@@ -1,4 +1,4 @@
-import { resetPassword } from "../../controllers/auth";
+import { resetPassword } from "../../../../lib/controllers/auth";
 
 export async function POST(request: Request) {
 	const body = await request.json();

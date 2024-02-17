@@ -1,8 +1,8 @@
-import { signIn } from "@/app/api/controllers/auth";
+import { signIn } from "@/lib/controllers/auth";
 
 export async function POST(request: Request) {
 	const body = await request.json();
-	const user = await signIn(body.email, body.password);
+	const user = await signIn(body.name, body.email, body.password);
 
-	return Response.json({ user });
+	return Response.json(user);
 }
