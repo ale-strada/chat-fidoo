@@ -45,11 +45,14 @@ export const signUp = async (name: string, email: string, password: string) => {
 export const signIn = async (email: string, password: string) => {
 	try {
 		const res = await signInWithEmailAndPassword(auth, email, password);
-		const user = res.user;
-		const token = await res.user.getIdToken();
-		const UpdateToken = await User.updateUser(user.uid, { userToken: token });
 
-		return true;
+		const token = await res.user.getIdToken();
+		const UpdateToken = await User.updateUser(res.user.uid, {
+			userToken: token,
+		});
+		const user = await User.findByToken(token);
+
+		return user?.data;
 	} catch (error: any) {
 		return error.code;
 	}
