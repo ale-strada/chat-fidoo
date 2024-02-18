@@ -13,6 +13,7 @@ function removeBearer(token: string) {
 		return token;
 	}
 }
+
 export const getUserByToken = async (token: string) => {
 	try {
 		const cleanToken = removeBearer(token);
@@ -23,6 +24,7 @@ export const getUserByToken = async (token: string) => {
 		return false;
 	}
 };
+
 export const verifyToken = async (token: string, uid: string) => {
 	try {
 		const userToken = await User.getToken(uid);
@@ -33,6 +35,7 @@ export const verifyToken = async (token: string, uid: string) => {
 		return false;
 	}
 };
+
 export const signUp = async (name: string, email: string, password: string) => {
 	try {
 		const res = await createUserWithEmailAndPassword(auth, email, password);
@@ -46,6 +49,7 @@ export const signUp = async (name: string, email: string, password: string) => {
 		return error.code;
 	}
 };
+
 export const signIn = async (email: string, password: string) => {
 	try {
 		const res = await signInWithEmailAndPassword(auth, email, password);

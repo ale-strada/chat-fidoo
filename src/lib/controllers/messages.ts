@@ -3,6 +3,7 @@ import { getUserByToken, verifyToken } from "../controllers/auth";
 
 export const verifyUserAccess = async (token: string) => {
 	const user = await getUserByToken(token);
+	// compare current token with user token in database
 	const haveAccess = verifyToken(token, user?.uid);
 
 	return { haveAccess, user };
