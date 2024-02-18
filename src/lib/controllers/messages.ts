@@ -21,10 +21,3 @@ export const createNewMessage = async (text: string, token: string) => {
 		return newMessage;
 	}
 };
-
-export const getMessages = async () => {
-	const messages = await Message.getMessages();
-	console.log(messages, "MESSAGES");
-
-	return messages;
-};

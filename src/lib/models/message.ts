@@ -24,20 +24,4 @@ export class Message extends Model {
 		newMessage.data = message;
 		return newMessage;
 	}
-
-	static async getMessages() {
-		collection.onSnapshot(
-			(querySnapshot) => {
-				const messages: any = [];
-				querySnapshot.docChanges().forEach((snap) => {
-					const data = snap.doc.data();
-					messages.push(data);
-				});
-				return messages;
-			},
-			(error) => {
-				console.log(error);
-			}
-		);
-	}
 }
