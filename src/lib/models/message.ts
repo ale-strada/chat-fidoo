@@ -6,6 +6,7 @@ const collection = firestore.collection("messages");
 type message = {
 	author: string;
 	text: string;
+	createdAt: Date;
 };
 
 export class Message extends Model {

@@ -6,7 +6,6 @@ import { collection,  onSnapshot } from "firebase/firestore";
 
 
 const SignInForm = () => {
-console.log(process.env.NEXT_PUBLIC_FIREBASE_API_KEY, "NEXT_PUBLIC_FIREBASE_API_KEY");
 
 let chat: any = []
 const [chatData, setChatData] =useState([])
@@ -18,6 +17,10 @@ useEffect(() => {
 }, [])
 
 console.log(chatData, "CHATDATA");
+const mensajesOrdenados = chatData.slice().sort((a: any, b: any) => {
+  // Comparar las fechas de creación (createdAt) para ordenar de más viejo a más nuevo
+  return a.createdAt.seconds - b.createdAt.seconds;
+});
 
 
 
@@ -26,9 +29,9 @@ console.log(chatData, "CHATDATA");
       <div>
         <p>mensajes</p> 
         <div>
-          {chatData.map((message: any) => (
+          {mensajesOrdenados.map((message: any) => (
             <div>
-              <p>{message.username}</p>
+              <p>{message.author}, {message.createdAt.toDate().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
               <p>{message.text}</p>
             </div>
           ))}

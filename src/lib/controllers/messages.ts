@@ -17,6 +17,7 @@ export const createNewMessage = async (text: string, token: string) => {
 		const newMessage = await Message.createNewMessage({
 			text,
 			author: user.name,
+			createdAt: new Date(),
 		});
 		return newMessage;
 	}
