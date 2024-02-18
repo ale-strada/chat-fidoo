@@ -42,7 +42,7 @@ export const signUp = async (name: string, email: string, password: string) => {
 		return error.code;
 	}
 };
-export const signIn = async (name: string, email: string, password: string) => {
+export const signIn = async (email: string, password: string) => {
 	try {
 		const res = await signInWithEmailAndPassword(auth, email, password);
 		const user = res.user;
