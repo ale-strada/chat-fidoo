@@ -64,31 +64,30 @@ const handleLogOut = () => {
   
 }
 
-  return (
-    <>
+return (
+  <>
     <div className="flex items-center gap-x-6 flex-col mb-6">
-    <h1 className="text-3xl font-semibold leading-7 text-gray-900 mb-4">Fidoo chat</h1>
-  </div>
+      <h1 className="text-3xl font-semibold leading-7 text-gray-900 mb-4">Fidoo chat</h1>
+    </div>
     <div className='flex flex-col border-2 border-gray-300 w-full rounded-md p-4 max-w-md max-h-screen scrollbar scrollbar-thumb-gray-300'>
       <div>
         <div 
           className='flex flex-col gap-1 h-96 scrollbar scrollbar-thumb-gray-100 overflow-y-auto' 
           ref={scrollContainerRef} 
-          >
+        >
           {sortedMessages.map((message: any) => (
             <div 
-            key={message.createdAt}
-            className={`border-2 border-gray-300 p-2 rounded-md max-w-[70%] ${message.author === user?.name ? 'self-end border-indigo-300' : 'self-start'}`}
+              key={message.createdAt}
+              className={`border-2 border-gray-300 p-2 rounded-md max-w-[70%] ${message.author === user?.name ? 'self-end border-indigo-300' : 'self-start'}`}
             >
               <label className='text-gray-500 text-xs'>{message.author} {message.createdAt.toDate().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</label>
               <p>{message.text}</p>
             </div>
           ))}
         </div>
-        
       </div>
       <form onSubmit={formik.handleSubmit} className="space-y-6 w-full max-w-md">
-      <div className="mb-3">
+        <div className="mb-3">
           <div className="mt-2">
             <textarea
               placeholder="Message"
@@ -102,28 +101,27 @@ const handleLogOut = () => {
           </div>
         </div>
       
-      <div className="mt-6 flex items-center justify-end gap-x-6">
-        <button 
-        disabled={formik.isSubmitting} 
-        onClick={handleLogOut}
-        type="button" 
-        className="text-sm font-semibold leading-6 text-gray-900">
-          Log out
-        </button>
-        <button
-        className="boton bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-        type="submit"
-        disabled={formik.isSubmitting}
-        >
-        Send
-      </button>
-
-      </div>
-      
-        </form>
+        <div className="mt-6 flex items-center justify-end gap-x-6">
+          <button 
+            disabled={formik.isSubmitting} 
+            onClick={handleLogOut}
+            type="button" 
+            className="text-sm font-semibold leading-6 text-gray-900"
+          >
+            Log out
+          </button>
+          <button
+            className="boton bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            type="submit"
+            disabled={formik.isSubmitting}
+          >
+            Send
+          </button>
+        </div>
+      </form>
     </div>
-    </>
-  );
+  </>
+);
 };
 
 export default Chat;
