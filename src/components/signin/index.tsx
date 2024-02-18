@@ -32,9 +32,8 @@ const SignInForm = () => {
           saveUser(user);
           setCurrentUser(user);
           toast.success("User logged in correctly");
-        
-          
           router.push('/chat');
+          
         } catch (error) {
           values.password = '';
           values.email = '';

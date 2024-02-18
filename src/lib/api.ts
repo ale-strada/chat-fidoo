@@ -17,8 +17,11 @@ export function saveUser(user: any) {
 	localStorage.setItem("user", JSON.stringify(user));
 }
 export function getSavedUser() {
-	const user = JSON.parse(localStorage.getItem("user") || "{}");
-	return user;
+	if (typeof window !== "undefined") {
+		// El código aquí se ejecutará solo en el lado del cliente
+		const user = JSON.parse(localStorage.getItem("user") || "{}");
+		return user;
+	}
 }
 export function deleteToken() {
 	localStorage.removeItem("auth-token");
