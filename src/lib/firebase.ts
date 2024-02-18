@@ -1,6 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { initializeAuth, browserSessionPersistence } from "firebase/auth";
+import { getDatabase } from "firebase/database";
 import { getFirestore } from "firebase/firestore";
 // import { getAnalytics } from "firebase/analytics";
 
@@ -9,7 +10,8 @@ import { getFirestore } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const apiKey = process.env.FIREBASE_API_KEY;
+// const apiKey = process.env.FIREBASE_API_KEY;
+const apiKey = process.env.NEXT_PUBLIC_FIREBASE_API_KEY;
 
 const firebaseConfig = {
 	apiKey: apiKey,
@@ -19,6 +21,7 @@ const firebaseConfig = {
 	messagingSenderId: "861556678322",
 	appId: "1:861556678322:web:345ba0d0d5f43876af33ab",
 	measurementId: "G-QQZ2MBWLKD",
+	databaseURL: "https://chat-fidoo-default-rtdb.firebaseio.com/",
 };
 
 // Initialize Firebase
@@ -31,4 +34,5 @@ export const auth = initializeAuth(app, {
 	popupRedirectResolver: undefined,
 });
 
-export const firestore = getFirestore(app);
+export const db = getFirestore(app);
+export const database = getDatabase(app);
