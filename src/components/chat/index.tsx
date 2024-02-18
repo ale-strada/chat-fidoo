@@ -64,6 +64,13 @@ const handleLogOut = () => {
   
 }
 
+const handleKeyDown = (event: React.KeyboardEvent, formik: any) => {
+  if (event.key === 'Enter' && !event.shiftKey) {
+    event.preventDefault();
+    formik.handleSubmit();
+  }
+};
+
 return (
   <>
     <div className="flex items-center gap-x-6 flex-col mb-6">
@@ -86,7 +93,7 @@ return (
           ))}
         </div>
       </div>
-      <form onSubmit={formik.handleSubmit} className="space-y-6 w-full max-w-md">
+      <form onSubmit={formik.handleSubmit} onKeyDown={(event) => handleKeyDown(event, formik)} className="space-y-6 w-full max-w-md">
         <div className="mb-3">
           <div className="mt-2">
             <textarea
