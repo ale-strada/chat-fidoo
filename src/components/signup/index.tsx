@@ -3,12 +3,16 @@ import React from 'react';
 import { useRouter } from "next/navigation";
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { signUp } from '@/lib/api';
+import { saveToken, saveUser, signUp } from '@/lib/api';
+import { useRecoilState } from 'recoil';
+import { currentUserAtom } from '../../lib/hooks';
+import { toast } from 'react-toastify'
 
 
 
 
 const SignUpForm = () => {
+  const [ , setCurrentUser] = useRecoilState(currentUserAtom);
     const router = useRouter();
 
     const formik = useFormik({
@@ -24,13 +28,20 @@ const SignUpForm = () => {
                 email: values.email,
                 password: values.password
             }
-            // await signIn(authData);
+      
             try {
-                console.log(authData);
-                await signUp(authData);
-                alert("account created");
+
+                const user = await signUp(authData);
+                saveToken(user.userToken);
+                saveUser(user);
+                setCurrentUser(user);
+                toast.success("User created correctly");
+                router.push('/chat');
             } catch (error) {
-                console.log(error);
+                values.password = '';
+                values.email = '';
+                values.name = '';
+                toast.error("User already exists");
             }
             
             },

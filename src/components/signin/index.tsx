@@ -1,13 +1,19 @@
 "use client";
 import React from 'react';
+import { toast } from 'react-toastify'
+import { useRouter } from "next/navigation";
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { signIn } from '@/lib/api';
+import { saveToken, saveUser, signIn } from '@/lib/api';
+import { useRecoilState } from 'recoil';
+import { currentUserAtom } from '../../lib/hooks';
+
 
 
 
 const SignInForm = () => {
-
+  const router = useRouter();
+  const [ , setCurrentUser] = useRecoilState(currentUserAtom);
   const formik = useFormik({
     initialValues: {
         email: '',
@@ -21,11 +27,18 @@ const SignInForm = () => {
         }
         try {
           const user = await signIn(authData);
-          console.log(user);
           
-          alert("Login correcto");
+          saveToken(user.userToken);
+          saveUser(user);
+          setCurrentUser(user);
+          toast.success("User logged in correctly");
+        
+          
+          router.push('/chat');
         } catch (error) {
-          console.log(error);
+          values.password = '';
+          values.email = '';
+          toast.error("user or password incorrect");
         }
         
         },
@@ -99,6 +112,7 @@ return (
         Cancel
       </button>
       <button
+        disabled={formik.isSubmitting}
         type="submit"
         className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
       >

@@ -7,7 +7,11 @@ import {
 } from "firebase/auth";
 
 function removeBearer(token: string) {
-	return token.split(" ")[1];
+	if (token.includes("Bearer")) {
+		return token.split("Bearer ")[1];
+	} else {
+		return token;
+	}
 }
 export const getUserByToken = async (token: string) => {
 	try {
@@ -37,7 +41,7 @@ export const signUp = async (name: string, email: string, password: string) => {
 		const user = { name, email, uid, userToken: token };
 		const newUser = await User.createNewUser(uid, user);
 
-		return true;
+		return newUser?.data;
 	} catch (error: any) {
 		return error.code;
 	}

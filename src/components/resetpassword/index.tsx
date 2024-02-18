@@ -1,5 +1,6 @@
 "use client";
 import React from 'react';
+import { toast } from 'react-toastify'
 import { useRouter } from "next/navigation";
 import { useFormik } from 'formik';
 import * as yup from 'yup';
@@ -21,10 +22,11 @@ const ResetPasswordForm = () => {
             try {
                 const email = values.email;
                 await resetPassword(email);
-                alert("email sent");
+                toast.success("Check your email");
                 router.push("/");
             } catch (error) {
-                console.log(error);
+                toast.error("Email not found");
+                values.email = '';
             }
             
             },

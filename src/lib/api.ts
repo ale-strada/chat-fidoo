@@ -2,30 +2,33 @@
 
 //const API_URL = "https://api.dbio.education";
 
-//guarda el token de usuario en sessionStorage
+//guarda el token de usuario en localStorage
 export function saveToken(token: string) {
-	sessionStorage.setItem("auth-token", token);
+	localStorage.setItem("auth-token", token);
 }
 
-//busca el token del usuario en sessionStorage
+//busca el token del usuario en localStorage
 export function getSavedToken() {
-	const token = sessionStorage.getItem("auth-token");
+	const token = localStorage.getItem("auth-token");
 	return token;
 }
 
+export function saveUser(user: any) {
+	localStorage.setItem("user", JSON.stringify(user));
+}
 export function getSavedUser() {
-	const user = JSON.parse(sessionStorage.getItem("user") || "{}");
+	const user = JSON.parse(localStorage.getItem("user") || "{}");
 	return user;
 }
 export function deleteToken() {
-	sessionStorage.removeItem("auth-token");
+	localStorage.removeItem("auth-token");
 
 	return true;
 }
 
 export const LogOut = () => {
 	deleteToken();
-	sessionStorage.removeItem("user");
+	localStorage.removeItem("user");
 };
 
 export async function fetchAPI(input: RequestInfo, options: any) {
@@ -85,5 +88,12 @@ export const resetPassword = async (email: string) => {
 	return fetchAPI("/api/auth/resetpassword", {
 		method: "POST",
 		body: { email },
+	});
+};
+
+export const createNewMessage = async (text: string) => {
+	return fetchAPI("/api/messages/new", {
+		method: "POST",
+		body: { text },
 	});
 };
