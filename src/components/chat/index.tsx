@@ -100,6 +100,7 @@ return (
               placeholder="Message"
               name="text"
               id="text"
+              maxLength={300}
               onChange={formik.handleChange}
               value={formik.values.text}
               autoComplete='off'
