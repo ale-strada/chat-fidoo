@@ -8,6 +8,7 @@ import { useRecoilValue } from 'recoil';
 import { toast } from 'react-toastify'
 import { LogOut, createNewMessage } from '@/lib/api';
 import { useRouter } from "next/navigation";
+import Loader from '@/app/ui/loader';
 
 
 
@@ -131,7 +132,8 @@ return (
             type="submit"
             disabled={formik.isSubmitting}
           >
-            Send
+            {formik.isSubmitting ? <Loader /> : 'Send'}
+
           </button>
         </div>
       </form>
