@@ -7,6 +7,7 @@ import * as yup from 'yup';
 import { saveToken, saveUser, signIn } from '@/lib/api';
 import { useRecoilState } from 'recoil';
 import { currentUserAtom } from '../../lib/hooks';
+import Loader from '@/app/ui/loader';
 
 
 
@@ -31,7 +32,7 @@ const SignInForm = () => {
           saveToken(user.userToken);
           saveUser(user);
           setCurrentUser(user);
-          toast.success("User logged in correctly");
+          toast.success("User logged correctly");
           router.push('/chat');
           
         } catch (error) {
@@ -48,7 +49,7 @@ const SignInForm = () => {
     })
 });
 
-
+  
 
 return (
   <form onSubmit={formik.handleSubmit} className="space-y-6 w-full max-w-md">
@@ -115,7 +116,8 @@ return (
         type="submit"
         className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
       >
-        Login
+        {!formik.isSubmitting && "Sign in"} 
+        {formik.isSubmitting && <Loader />}
       </button>
     </div>
   </form>

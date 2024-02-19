@@ -5,6 +5,7 @@ import { useFormik } from 'formik';
 import { collection,  onSnapshot } from "firebase/firestore";
 import { currentUserState } from '@/lib/hooks';
 import { useRecoilValue } from 'recoil';
+import { toast } from 'react-toastify'
 import { LogOut, createNewMessage } from '@/lib/api';
 import { useRouter } from "next/navigation";
 
@@ -42,6 +43,7 @@ useEffect(() => {
 const sortedMessages = chatData.slice().sort((a: any, b: any) => {
   return a.createdAt.seconds - b.createdAt.seconds;
 });
+console.log(user);
 
 const formik = useFormik({
   initialValues: {
@@ -49,8 +51,14 @@ const formik = useFormik({
   },
   onSubmit:async values => {
     try {
-      await createNewMessage(values.text);
-      values.text = '';
+      if(user.email && user.uid){
+        await createNewMessage(values.text);
+        values.text = '';
+      } else {
+        toast.error("You must be logged in to send messages");
+        router.push('/');
+      }
+      
       } catch (error) {
         console.log(error);
       }
