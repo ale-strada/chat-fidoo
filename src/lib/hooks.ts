@@ -1,5 +1,7 @@
-import { atom, selector } from "recoil";
+import { atom, selector, useRecoilState } from "recoil";
 import { getSavedUser } from "./api";
+import { db } from "@/lib/firebase";
+import { collection, onSnapshot } from "firebase/firestore";
 
 export const currentUserAtom = atom({
 	key: "currentUser", // Clave única para el átomo
@@ -18,4 +20,9 @@ export const currentUserState = selector({
 			return savedUser;
 		}
 	},
+});
+
+export const chatsAtom = atom({
+	key: "Chats",
+	default: [],
 });

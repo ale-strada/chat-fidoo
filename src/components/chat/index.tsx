@@ -1,10 +1,10 @@
 "use client";
-import React, { useEffect, useRef, useState, useLayoutEffect } from 'react';
+import React, { useEffect, useRef} from 'react';
 import { db } from "@/lib/firebase";
 import { useFormik } from 'formik';
 import { collection,  onSnapshot } from "firebase/firestore";
-import { currentUserState } from '@/lib/hooks';
-import { useRecoilValue } from 'recoil';
+import { chatsAtom, currentUserState } from '@/lib/hooks';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { toast } from 'react-toastify'
 import { LogOut, createNewMessage } from '@/lib/api';
 import { useRouter } from "next/navigation";
@@ -13,38 +13,39 @@ import Loader from '@/app/ui/loader';
 
 
 const Chat = () => {
-const router = useRouter();
-const user = useRecoilValue(currentUserState)
-const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
+  const user = useRecoilValue(currentUserState)
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [chatData, setChatData] = useRecoilState(chatsAtom);
 
-let chat: any = []
-const [chatData, setChatData] =useState([])
+  useEffect(() => {
+    const unsubscribe = onSnapshot(collection(db, "messages"), (snapshot) => {
+      // @ts-ignore
+      setChatData(snapshot.docs.map((doc) => ({ ...doc.data(), doc: doc.metadata, key: doc.id })));
+    });
 
-useEffect(() => {
-  // @ts-ignore
-  const unsubscribe = onSnapshot(collection(db, "messages"), (snapshot) => setChatData(snapshot.docs.map((doc) => ({ ...doc.data(), doc: doc.metadata, key: doc.id }))))
-  return () => unsubscribe()
-}, [])
-  
- useEffect(() => {
-  if(chatData){
-    const scrollContainer = scrollContainerRef.current;
-  
-  if (scrollContainer) {
-    const lastChild = scrollContainer.lastElementChild as HTMLElement | null;
+    return () => unsubscribe();
+  }, [setChatData]);
+
+
+  useEffect(() => {
+    if(chatData){
+      const scrollContainer = scrollContainerRef.current;
     
-    
-    if (lastChild) {
-      lastChild.scrollIntoView({ behavior: 'smooth' });
+    if (scrollContainer) {
+      const lastChild = scrollContainer.lastElementChild as HTMLElement | null;
+
+
+      if (lastChild) {
+        lastChild.scrollIntoView({ behavior: 'smooth' });
+      }
     }
-  }
   }
   
 }, [chatData[0]]); 
 const sortedMessages = chatData.slice().sort((a: any, b: any) => {
   return a.createdAt.seconds - b.createdAt.seconds;
 });
-console.log(user);
 
 const formik = useFormik({
   initialValues: {
