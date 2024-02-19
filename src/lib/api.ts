@@ -1,13 +1,7 @@
-// const BASE_URL = "/api";
-
-//const API_URL = "https://api.dbio.education";
-
-//guarda el token de usuario en localStorage
 export function saveToken(token: string) {
 	localStorage.setItem("auth-token", token);
 }
 
-//busca el token del usuario en localStorage
 export function getSavedToken() {
 	const token = localStorage.getItem("auth-token");
 	return token;
@@ -18,7 +12,7 @@ export function saveUser(user: any) {
 }
 export function getSavedUser() {
 	if (typeof window !== "undefined") {
-		// El código aquí se ejecutará solo en el lado del cliente
+		// This code will be executed only on the client side
 		const user = JSON.parse(localStorage.getItem("user") || "{}");
 		return user;
 	}

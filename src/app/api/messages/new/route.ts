@@ -5,6 +5,6 @@ export async function POST(request: Request) {
 	const text = body.text;
 	const auth = request.headers.get("Authorization");
 
-	const newMessage = await createNewMessage(body.text, auth as string);
+	const newMessage = await createNewMessage(text, auth as string);
 	return Response.json(newMessage);
 }
