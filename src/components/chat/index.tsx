@@ -80,7 +80,7 @@ const Chat = () => {
   return (
     <>
       <div className="flex items-center gap-x-6 flex-col mb-6">
-        <h1 className="text-3xl font-semibold leading-7 text-gray-900 mb-4">Fidoo chat</h1>
+        <h1 className="text-3xl font-semibold leading-7 text-gray-900 mb-4">Chat</h1>
       </div>
       <div className='flex flex-col border-2 border-gray-300 w-full rounded-md p-4 max-w-md max-h-screen scrollbar scrollbar-thumb-gray-300'>
         <div>

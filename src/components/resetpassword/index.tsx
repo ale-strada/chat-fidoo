@@ -43,7 +43,7 @@ return (
       <div className="space-y-10 w-full">
         <div className="border-b border-gray-900/10 pb-8 w-full">
           <div className="flex items-center gap-x-6 flex-col mb-6">
-            <h1 className="text-3xl font-semibold leading-7 text-gray-900 mb-4">Fidoo chat</h1>
+            <h1 className="text-3xl font-semibold leading-7 text-gray-900 mb-4">chat</h1>
             <p className="mt-1 text-2xl leading-6 text-gray-600">Reset Password</p>
           </div>
 

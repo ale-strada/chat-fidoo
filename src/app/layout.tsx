@@ -9,7 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Fidoo Chat App",
+  title: "Chat App",
   description: "simple chat app with next js",
 };
 
